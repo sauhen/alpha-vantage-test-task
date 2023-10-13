@@ -51,11 +51,8 @@ function Example() {
                 console.log(event);
                 setStockData(prevData => ({
                     ...prevData,
-                    [symbol.symbol]: {
-                        ...prevData[symbol.symbol],
-                        stockPrices: [event, ...prevData[symbol.symbol].stockPrices]
-                    }
-                }));
+                    [symbol.symbol]: event
+                }));  
             });
         });
     }, [symbolsArray]);
@@ -67,22 +64,36 @@ function Example() {
     };
 
     return (
-        <div>
-            {symbolsArray.map(symbol => {
-                const stockDataForSymbol = stockData[symbol.symbol];
-                if (!stockDataForSymbol) return null;
+        <table className='stock-table'>
+            <thead>
+                <tr className='stock-table__caption'>
+                    <td className="symbol">Symbol</td>
+                    <td className="company">Company name</td>
+                    <td className="latest-price">Latest Price</td>
+                    <td className="percentage-change">%</td>
+                    <td className="ico"></td>
+                </tr>
+            </thead>
+            <tbody>
+                {symbolsArray.map(symbol => {
+                    const stockDataForSymbol = stockData[symbol.symbol];
+                    if (!stockDataForSymbol) return null;
 
-                const [latestPrice, previousPrice] = stockDataForSymbol.stockPrices;
+                    const [latestPrice, previousPrice] = stockDataForSymbol.stockPrices;
+                    const percantegeChange = calculatePercentageChange(latestPrice, previousPrice);
 
-                return (
-                    <div key={symbol.symbol}>
-                        <h2>Stock Symbol: {stockDataForSymbol.stock.symbol}</h2>
-                        <p>Latest Price: {latestPrice.price}$</p>
-                        <p>Percentage Change: {calculatePercentageChange(latestPrice, previousPrice)}%</p>
-                    </div>
-                );
-            })}
-        </div>
+                    return (
+                        <tr key={symbol.symbol} className='stock-table__line'>
+                            <td>{stockDataForSymbol.stock.symbol}</td>
+                            <td>{stockDataForSymbol.stock.company_name}</td>
+                            <td className="latest-price">{latestPrice.price}$</td>
+                            <td className="percentage-change">{percantegeChange}%</td>
+                            <td className="ico">{percantegeChange >= 0 ? '↑' : '↓'}</td>
+                        </tr>
+                    );
+                })}
+            </tbody>
+        </table>
     );
 }
 

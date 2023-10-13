@@ -36,6 +36,6 @@ class StockPriceUpdated implements ShouldBroadcast
 
     public function broadcastWith(): array
     {
-        return [$this->stockData];
+        return $this->stockData;
     }
 }
