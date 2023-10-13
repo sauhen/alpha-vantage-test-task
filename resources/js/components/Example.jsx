@@ -25,7 +25,7 @@ function Example() {
         for (const symbol of symbolsArray) {
             const dataSymbol = symbol.symbol;
             const response = await axios.get(`/api/latest-stock-price/${dataSymbol}`);
-            console.log(response.data);
+
             setStockData(prevData => ({
                 ...prevData,
                 [dataSymbol]: response.data
@@ -36,8 +36,6 @@ function Example() {
     useEffect(() => {
 
         fetchData();
-
-        console.log(stockData);
 
         const echo = new Echo({
             broadcaster: 'pusher',

@@ -13,6 +13,7 @@
             @php
                 $manifest = json_decode(file_get_contents(public_path('build/manifest.json')), true);
             @endphp
+            <link rel="stylesheet" href="{{ URL::asset('build/'.$manifest['resources/sass/app.scss']['file']) }}">
             <script src="{{ URL::asset('build/'.$manifest['resources/js/app.js']['file']) }}" defer></script>
         @else
             @vite(['resources/sass/app.scss'])

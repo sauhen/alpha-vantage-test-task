@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Cache;
 class StockPriceController extends Controller
 {
     public function getAllSymbols(){
-        $symbols = Stock::take(1)->get();
+        $symbols = Stock::take(5)->get();
         return response()->json($symbols);
     }
 

@@ -38,10 +38,8 @@ class FetchStockPrices extends Command
      * Execute the console command.
      */
     public function handle()
-    {
-        // broadcast(new StockPriceUpdated("AAPL", ['test']))->toOthers();
-        
-        $stocks = Stock::take(1)->get();
+    {        
+        $stocks = Stock::all();
 
         foreach($stocks as $stock){
             $symbol = $stock->symbol;
